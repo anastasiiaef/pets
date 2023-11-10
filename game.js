@@ -12,6 +12,9 @@ class mainScene {
     create() {
       // This method is called once, just after preload()
       // It will initialize our scene, like the positions of the sprites
+      this.background = this.add.tileSprite(0,0 , this.game.config.width, this.game.config.height, "background");
+      this.background.setOrigin(0,0);
+
       this.player = this.physics.add.sprite(500, 450, 'player');
       this.food = this.physics.add.sprite(300, 300, 'food');
       this.food.setScale(0.01); 
