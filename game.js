@@ -5,8 +5,9 @@ class mainScene {
     preload() {
       // This method is called once at the beginning
       // It will load all the assets, like sprites and sounds 
+      this.load.image('background', 'assets/background.png');
       this.load.image('player', 'assets/dog1.png');
-      this.load.image('food', 'assets/str.png');;
+      this.load.image('food', 'assets/str.png');
     }
     create() {
       // This method is called once, just after preload()
