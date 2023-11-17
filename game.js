@@ -19,7 +19,7 @@ class mainScene {
 
     }
     update() {
-        
+
             // Handle horizontal movements
             if (this.arrow.right.isDown) {
                 // If the right arrow is pressed, move to the right
