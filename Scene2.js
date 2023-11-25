@@ -6,15 +6,16 @@ class Scene2 extends Phaser.Scene {
   create() {
 
       //Initializes our scene, like the positions of the sprites
-      this.background = this.add.tileSprite(0, 0, this.game.config.width, this.game.config.height, "background");
-      //this.background = this.add.image(0, 0, "background");
+      this.background = this.add.tileSprite(0, 0, config.width, config.height, "background");
       this.background.setOrigin(0, 0);
 
-      this.player = this.physics.add.sprite(500, 450, 'player');
+      this.player = this.physics.add.sprite(500, 750, 'player');
+      this.player.setScale(1);
       this.createAnimations();
 
+
       this.food = this.physics.add.sprite(300, 300, 'food');
-      this.food.setScale(0.02);
+      this.food.setScale(0.25);
 
       this.arrow = this.input.keyboard.createCursorKeys();
   }
@@ -22,9 +23,9 @@ class Scene2 extends Phaser.Scene {
     update() {
     //Called every frame and allows for continuous updates
         this.updateMovement(this.arrow);
-        this.moveFood(this.food, 3);
+        this.moveFood(this.food, 1);egg
 
-        //this.background.tilePositionX += 0.3;
+        this.background.tilePositionX += 0.3;
     }
 
     moveFood(food, speed) {
@@ -43,7 +44,7 @@ class Scene2 extends Phaser.Scene {
   updateMovement(cursors) {
 
       //Stop animations by default
-      this.player.anims.stop();
+     //this.player.anims.stop();
 
       //Move left
       if (cursors.left.isDown) {
@@ -57,6 +58,16 @@ class Scene2 extends Phaser.Scene {
           this.player.anims.play("right", true);
       } 
 
+        //Move up
+        else if (cursors.up.isDown) {
+            this.player.y -= 20;
+            this.player.anims.play("jump", true);
+        }
+
+        // Neutral (no movement)
+        else {
+            this.player.anims.stop();
+        }
 }
 
   createAnimations() {
@@ -64,9 +75,9 @@ class Scene2 extends Phaser.Scene {
   //Left animation
       this.anims.create({
           key: "left",
-          frames: this.anims.generateFrameNumbers("player", { start: 0, end: 1 }),
+          frames: this.anims.generateFrameNumbers("player", { start: 4, end: 5}),
           frameRate: 10,
-          repeat: -1,
+          repeat: -1
       });
   
   //Right animation
@@ -74,7 +85,14 @@ class Scene2 extends Phaser.Scene {
           key: "right",
           frames: this.anims.generateFrameNumbers("player", { start: 2, end: 3 }),
           frameRate: 10,
-          repeat: -1,
+          repeat: -1
       });
-  }
+
+      this.anims.create({
+        key: "jump",
+        frames: this.anims.generateFrameNumbers("player", { start: 0, end: 1 }),
+        frameRate: 10,
+        repeat: -1
+        });
+    }
 }
