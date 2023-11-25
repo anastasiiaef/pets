@@ -27,26 +27,36 @@ class Scene2 extends Phaser.Scene {
       this.icecream = this.physics.add.sprite(1000, 0, 'icecream');
       this.icecream.setScale(0.13);
 
+      this.food = this.physics.add.group();
+      this.food.add(this.eggplant);
+      this.food.add(this.strawberry);
+      this.food.add(this.cherry);
+
+      this.score = 0;
+      let style = { font: '20px Arial', fill: '#fff' };
+      this.scoreText = this.add.text(20, 20, 'score: ' + this.score, style);
+
       this.arrow = this.input.keyboard.createCursorKeys();
 
       this.player.setCollideWorldBounds(true);
-        // Set initial velocity to simulate upward jump
-        this.jumpVelocity = 0;
+      // Set initial velocity to simulate upward jump
+      this.jumpVelocity = 0;
 
-        // Check if the player is in the air
-        this.isJumping = false;
+      // Check if the player is in the air
+     this.isJumping = false;
 
-  }
+     this.physics.add.overlap(this.player, this.food, this.pickFoodUp, null, this);
+   }
 
     update() {
     //Called every frame and allows for continuous updates
         this.updateMovement(this.arrow);
         this.background.tilePositionX += 0.5;
 
-        this.moveFood(this.eggplant, 1);
-        this.moveFood(this.cherry, 2);
-        this.moveFood(this.strawberry, 1);
-        this.moveFood(this.icecream, 3);
+        this.moveFood(this.eggplant, 2);
+        this.moveFood(this.cherry, 3);
+        this.moveFood(this.strawberry, 3);
+        this.moveFood(this.icecream, 4);
     }
 
     moveFood(food, speed) {
@@ -61,6 +71,13 @@ class Scene2 extends Phaser.Scene {
         var randomX = Phaser.Math.Between(0, config.width);
         food.x = randomX;
     }
+
+    pickFoodUp(player, food){
+        this.resetFoodPos(food);
+        this.score += 10;
+        this.scoreText.setText('score: ' + this.score);
+    }
+
 
   updateMovement(cursors) {
       //Move left
