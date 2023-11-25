@@ -7,10 +7,17 @@ class Scene1 extends Phaser.Scene {
       // This method is called once at the beginning
       // It will load all the assets, like sprites and sounds 
       this.load.image('background', 'assets/forest.png');
-      this.load.image('food', 'assets/egg.png');
-      this.load.spritesheet('player', 'assets/last.png',{
+      this.load.image('eggplant', 'assets/eggplant.png');
+      this.load.image('cherry', 'assets/cherry.png');
+      this.load.image('icecream', 'assets/icecream.png');
+      this.load.image('strawberry', 'assets/strawberry.png');
+      this.load.spritesheet('player', 'assets/dog.png',{
         frameWidth: 160,
         frameHeight: 230
+      });
+      this.load.spritesheet('explosion', 'assets/explosion.png',{
+        frameWidth: 16,
+        frameHeight: 16
       });
 
   
