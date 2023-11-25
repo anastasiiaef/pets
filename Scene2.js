@@ -23,7 +23,7 @@ class Scene2 extends Phaser.Scene {
     update() {
     //Called every frame and allows for continuous updates
         this.updateMovement(this.arrow);
-        this.moveFood(this.food, 1);egg
+        this.moveFood(this.food, 1);
 
         this.background.tilePositionX += 0.3;
     }
