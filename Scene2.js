@@ -33,8 +33,9 @@ class Scene2 extends Phaser.Scene {
       this.food.add(this.cherry);
 
       this.score = 0;
-      let style = { font: '20px Arial', fill: '#fff' };
+      let style = { font: '60px Arial', fill: '#fff' };
       this.scoreText = this.add.text(20, 20, 'score: ' + this.score, style);
+      this.gameText = this.add.text(600, 450, 'Playing... ', style);
 
       this.arrow = this.input.keyboard.createCursorKeys();
 
@@ -46,6 +47,7 @@ class Scene2 extends Phaser.Scene {
      this.isJumping = false;
 
      this.physics.add.overlap(this.player, this.food, this.pickFoodUp, null, this);
+     this.physics.add.overlap(this.player, this.icecream, this.hurtPlayer, null, this);
    }
 
     update() {
@@ -78,6 +80,45 @@ class Scene2 extends Phaser.Scene {
         this.scoreText.setText('score: ' + this.score);
     }
 
+    hurtPlayer(player, food){
+            this.resetFoodPos(food);
+            if(this.player.alpha < 1){
+                return;
+            }
+            this.score -= 50;
+            if(this.score <= -100) {
+                this.player.anims.play("dead", true);
+                this.gameText.setText('GAME OVER');
+            }else{
+                this.scoreText.setText('score: ' + this.score);
+                player.disableBody(true, true);
+                this.time.addEvent({
+                    delay: 1000,
+                    callback: this.resetPlayer,
+                    callbackScope: this,
+                    loop: false
+                });
+        }
+    }
+
+    resetPlayer() {
+        var x = config.width/2-8;
+        var y = config.height+64;
+        this.player.enableBody(true, x, y, true, true);
+        this.player.alpha = 0.5;
+
+        var tween = this.tweens.add({
+            targets: this.player,
+            y: config.height-64,
+            ease: 'Power1',
+            duration: 1500,
+            repeat:0,
+            onComplete: function(){
+                this.player.alpha=1;
+            },
+            callbackScope: this
+        });
+    }
 
   updateMovement(cursors) {
       //Move left
@@ -131,6 +172,14 @@ class Scene2 extends Phaser.Scene {
         frames: this.anims.generateFrameNumbers("player", { start: 1, end: 1 }),
         frameRate: 10,
         repeat: -1
+        });
+
+    //Dying
+      this.anims.create({
+        key: "dead",
+        frames: this.anims.generateFrameNumbers("dead", { start: 0, end: 2 }),
+        frameRate: 5,
+        repeat: 0
         });
     }
 }
