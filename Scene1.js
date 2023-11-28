@@ -11,10 +11,15 @@ class Scene1 extends Phaser.Scene {
       this.load.image('cherry', 'assets/cherry.png');
       this.load.image('icecream', 'assets/icecream.png');
       this.load.image('strawberry', 'assets/strawberry.png');
+      
       this.load.spritesheet('player', 'assets/dog.png',{
         frameWidth: 160,
         frameHeight: 230
       });
+     // this.load.spritesheet('player2', 'assets/dog2.png',{
+       // frameWidth: 160,
+        //frameHeight: 230
+      //});
       this.load.spritesheet('dead', 'assets/dead.png',{
         frameWidth: 230,
         frameHeight: 230
