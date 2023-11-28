@@ -63,7 +63,18 @@ class Scene2 extends Phaser.Scene {
         this.moveFood(this.cherry, 3);
         this.moveFood(this.strawberry, 3);
         this.moveFood(this.icecream, 4);
-    }
+
+        if(this.score >= 300)
+        {
+            this.moveFood(this.eggplant, 3);
+            this.moveFood(this.cherry, 4);
+            this.moveFood(this.strawberry, 4);
+            this.moveFood(this.icecream, 5);
+        }
+
+       
+    
+}
 
     moveFood(food, speed) {
         food.y += speed;
@@ -80,7 +91,7 @@ class Scene2 extends Phaser.Scene {
 
     pickFoodUp(player, food){
         this.resetFoodPos(food);
-        this.score += 10;
+        this.score += 30;
         this.scoreText.setText('score: ' + this.score);
         this.pickupSound.play();
     }
@@ -92,7 +103,9 @@ class Scene2 extends Phaser.Scene {
             }
             this.score -= 50;
             if(this.score <= -100) {
-                this.player.anims.play("dead", true);
+               // this.player.anims.play("dead", true);
+               console.log('game over')
+               this.player.setAlpha(0);
                 this.gameText.setText('GAME OVER');
             }else{
                 this.scoreText.setText('score: ' + this.score);
@@ -186,5 +199,13 @@ class Scene2 extends Phaser.Scene {
         frameRate: 5,
         repeat: 0
         });
+    
+    //level 2 animations
+   // this.anims.create({
+       // key: "dog2",
+     //   frames: this.anims.generateFrameNumbers("dog2", { start: 0, end: 2 }),
+     //   frameRate: 5,
+    //    repeat: 0
+    //    });
     }
 }
