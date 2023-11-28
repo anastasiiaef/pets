@@ -48,6 +48,10 @@ class Scene2 extends Phaser.Scene {
 
      this.physics.add.overlap(this.player, this.food, this.pickFoodUp, null, this);
      this.physics.add.overlap(this.player, this.icecream, this.hurtPlayer, null, this);
+
+     //adding sound when food ate
+     this.pickupSound = this.sound.add("audio_pickup");
+
    }
 
     update() {
@@ -78,6 +82,7 @@ class Scene2 extends Phaser.Scene {
         this.resetFoodPos(food);
         this.score += 10;
         this.scoreText.setText('score: ' + this.score);
+        this.pickupSound.play();
     }
 
     hurtPlayer(player, food){
