@@ -34,8 +34,8 @@ class Scene2 extends Phaser.Scene {
 
       this.score = 0;
       let style = { font: '60px Arial', fill: '#fff' };
-      this.scoreText = this.add.text(20, 20, 'score: ' + this.score, style);
-      this.gameText = this.add.text(600, 450, 'Playing... ', style);
+      this.scoreText = this.add.text(20, 20, 'Score: ' + this.score, style);
+      //this.gameText = this.add.text(600, 450, 'Playing... ', style);
 
       this.arrow = this.input.keyboard.createCursorKeys();
 
@@ -60,21 +60,37 @@ class Scene2 extends Phaser.Scene {
         this.background.tilePositionX += 0.5;
 
         this.moveFood(this.eggplant, 2);
-        this.moveFood(this.cherry, 3);
-        this.moveFood(this.strawberry, 3);
-        this.moveFood(this.icecream, 4);
-
-        if(this.score >= 300)
-        {
-            this.moveFood(this.eggplant, 3);
-            this.moveFood(this.cherry, 4);
-            this.moveFood(this.strawberry, 4);
-            this.moveFood(this.icecream, 5);
-        }
+        this.moveFood(this.cherry, 2);
+        this.moveFood(this.strawberry, 2);
+        this.moveFood(this.icecream, 2);
 
        
     
-}
+        if(this.score >= 300)
+        {
+            this.moveFood(this.eggplant, 3.5);
+            this.moveFood(this.cherry, 3.5);
+            this.moveFood(this.strawberry, 3.5);
+            this.moveFood(this.icecream, 4.5);
+        }
+
+        if(this.score >= 600)
+        {
+            this.moveFood(this.eggplant, 5);
+            this.moveFood(this.cherry, 5);
+            this.moveFood(this.strawberry, 5);
+            this.moveFood(this.icecream, 5);
+        }
+
+        if(this.score >= 1000)
+        {
+            this.gameOver();
+        }
+
+    }
+
+       
+    
 
     moveFood(food, speed) {
         food.y += speed;
@@ -207,5 +223,22 @@ class Scene2 extends Phaser.Scene {
      //   frameRate: 5,
     //    repeat: 0
     //    });
+
+
     }
+     //ending game after score reaches 1000. 
+     gameOver()  
+     {
+         console.log('Game Over');
+         this.scene.pause("playGame"); 
+         const x = config.width / 2;
+         const y = config.height / 2;
+     
+         this.gameText = this.add.text(x, y, 'Congratulations! You Won!', {
+             font: '60px Arial',
+             fill: '#0f0',
+             align: 'center'
+         });
+         this.gameText.setOrigin(0.5); 
+     }
 }

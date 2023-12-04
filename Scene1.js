@@ -32,7 +32,30 @@ class Scene1 extends Phaser.Scene {
 	
 	//Switch to Scene2
 	create() {
+
+    //Creating a instruction page then when clicked on Start game,
+    // the scene will go to Scene 2
+
+     this.add.text(100, 100, 'Instructions:', { font: '32px Arial', fill: '#fff' });
+     this.add.text(100, 150, 'Use arrow keys to move around and collect the food.', { font: '24px Arial', fill: '#fff' });
+     this.add.text(100, 200, 'Avoid obstacles and reach a score of 1000 to win.', { font: '24px Arial', fill: '#fff' });
+
+
+     // finds the center of page 
+     const cordCenter = config.width / 2;
+
+     // Add a button to start the game
+     const startButton = this.add.text(cordCenter, config.height - 50, 'Start Game', { font: '32px Arial', fill: '#0f0' })
+     .setOrigin(0.5, 1); 
+
+     // Make start button interactive
+    startButton.setInteractive();
+
+     // Define the behavior when the button is clicked
+     startButton.on('pointerdown', () => {
 		this.scene.start("playGame");
-	}
-  
+	});
+
 }
+}
+  
