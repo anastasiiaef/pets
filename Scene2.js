@@ -35,8 +35,6 @@ class Scene2 extends Phaser.Scene {
       this.score = 0;
       let style = { font: '60px Arial', fill: '#fff' };
       this.scoreText = this.add.text(20, 20, 'Score: ' + this.score, style);
-      //this.gameText = this.add.text(600, 450, 'Playing... ', style);
-
       this.arrow = this.input.keyboard.createCursorKeys();
 
       this.player.setCollideWorldBounds(true);
@@ -51,7 +49,6 @@ class Scene2 extends Phaser.Scene {
 
      //adding sound when food ate
      this.pickupSound = this.sound.add("audio_pickup");
-
    }
 
     update() {
@@ -64,8 +61,7 @@ class Scene2 extends Phaser.Scene {
         this.moveFood(this.strawberry, 2);
         this.moveFood(this.icecream, 2);
 
-       
-    
+    //Add levels
         if(this.score >= 300)
         {
             this.moveFood(this.eggplant, 3.5);
@@ -86,10 +82,21 @@ class Scene2 extends Phaser.Scene {
         {
             this.gameOver();
         }
-
     }
 
-       
+    deadBody(player) {
+
+        this.player.anims.play("dead", true);
+        const x = config.width / 2;
+        const y = config.height / 2;
+        this.gameText = this.add.text(x, y, 'GAME OVER!', {
+         font: '60px Arial',
+         fill: '#0f0',
+         align: 'center'
+     });
+     this.gameText.setOrigin(0.5); 
+
+    }
     
 
     moveFood(food, speed) {
@@ -105,10 +112,20 @@ class Scene2 extends Phaser.Scene {
         food.x = randomX;
     }
 
-    pickFoodUp(player, food){
+    pickFoodUp(player, food) {
+        // If the player is disabled (dead), do nothing
+        if (this.score <= -50) {
+            return;
+        }
+    
+        // Reset the position of the food
         this.resetFoodPos(food);
+    
+        // Update the score and display
         this.score += 30;
-        this.scoreText.setText('score: ' + this.score);
+        this.scoreText.setText('Score: ' + this.score);
+    
+        // Play the pickup sound
         this.pickupSound.play();
     }
 
@@ -116,14 +133,8 @@ class Scene2 extends Phaser.Scene {
             this.resetFoodPos(food);
             if(this.player.alpha < 1){
                 return;
-            }
-            this.score -= 50;
-            if(this.score <= -100) {
-               // this.player.anims.play("dead", true);
-               console.log('game over')
-               this.player.setAlpha(0);
-                this.gameText.setText('GAME OVER');
             }else{
+                this.score -= 50;
                 this.scoreText.setText('score: ' + this.score);
                 player.disableBody(true, true);
                 this.time.addEvent({
@@ -132,6 +143,10 @@ class Scene2 extends Phaser.Scene {
                     callbackScope: this,
                     loop: false
                 });
+        }
+        if(this.score <= -50) {
+            this.deadBody(this.player);
+            player.disableBody(true, true);
         }
     }
 
@@ -155,6 +170,11 @@ class Scene2 extends Phaser.Scene {
     }
 
   updateMovement(cursors) {
+
+    if (this.isPlayerDead()) {
+        return;
+    }
+
       //Move left
       if (cursors.left.isDown) {
           this.player.x -= 3;
@@ -183,6 +203,9 @@ class Scene2 extends Phaser.Scene {
         else {
             this.player.anims.stop();
         }
+}
+isPlayerDead() {
+    return this.score <= -50;
 }
 
   createAnimations() {
@@ -213,18 +236,12 @@ class Scene2 extends Phaser.Scene {
         key: "dead",
         frames: this.anims.generateFrameNumbers("dead", { start: 0, end: 2 }),
         frameRate: 5,
-        repeat: 0
+        repeat: 0,
+        onComplete: function (animation, frame) {
+            // Code to run after the animation completes
+            console.log('Dead animation completed');
+        },
         });
-    
-    //level 2 animations
-   // this.anims.create({
-       // key: "dog2",
-     //   frames: this.anims.generateFrameNumbers("dog2", { start: 0, end: 2 }),
-     //   frameRate: 5,
-    //    repeat: 0
-    //    });
-
-
     }
      //ending game after score reaches 1000. 
      gameOver()  
