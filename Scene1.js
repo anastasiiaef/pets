@@ -21,6 +21,7 @@ class Scene1 extends Phaser.Scene {
         frameHeight: 230
       });
 
+      this.load.audio("audio_background", "assets/sounds/background.mp3");
       this.load.audio("audio_pickup", ["assets/sounds/pickup.ogg",  "assets/sounds/pickup.mp3"]);
 
     }
@@ -40,7 +41,7 @@ class Scene1 extends Phaser.Scene {
      const cordCenter = config.width / 2;
 
      // Add a button to start the game
-     const startButton = this.add.text(cordCenter, config.height - 50, 'Start Game', { font: '32px Arial', fill: '#0f0' })
+     const startButton = this.add.text(cordCenter, config.height - 50, 'Start Game', { font: '32px Arial', fill: 'yellow' })
      .setOrigin(0.5, 1); 
 
      // Make start button interactive
