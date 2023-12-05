@@ -16,10 +16,6 @@ class Scene1 extends Phaser.Scene {
         frameWidth: 160,
         frameHeight: 230
       });
-     // this.load.spritesheet('player2', 'assets/dog2.png',{
-       // frameWidth: 160,
-        //frameHeight: 230
-      //});
       this.load.spritesheet('dead', 'assets/dead.png',{
         frameWidth: 230,
         frameHeight: 230
@@ -27,7 +23,6 @@ class Scene1 extends Phaser.Scene {
 
       this.load.audio("audio_pickup", ["assets/sounds/pickup.ogg",  "assets/sounds/pickup.mp3"]);
 
-  
     }
 	
 	//Switch to Scene2
