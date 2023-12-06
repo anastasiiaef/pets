@@ -35,6 +35,8 @@ class Scene1 extends Phaser.Scene {
      this.add.text(100, 100, 'Instructions:', { font: '32px Arial', fill: '#fff' });
      this.add.text(100, 150, 'Use arrow keys to move around and collect the food.', { font: '24px Arial', fill: '#fff' });
      this.add.text(100, 200, 'Avoid obstacles and reach a score of 1000 to win.', { font: '24px Arial', fill: '#fff' });
+     this.add.text(100, 250, 'Be careful, you have 3 lives, everytime you touch an ICECREAM, you will lose one', { font: '24px Arial', fill: '#fff' });
+
 
 
      // finds the center of page 

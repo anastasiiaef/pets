@@ -94,6 +94,7 @@ class Scene2 extends Phaser.Scene {
         {
             this.gameOver();
         }
+        
     }
 
     deadBody(player) {
@@ -264,5 +265,10 @@ class Scene2 extends Phaser.Scene {
              align: 'center'
          });
          this.gameText.setOrigin(0.5); 
+     }
+
+     playerslife()
+     {
+        
      }
 }
